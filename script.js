@@ -221,6 +221,8 @@ function switchVariant(idx) {
     const bladeThickness = parseInt(document.getElementById('cfg_blade_thick').value) || 0;
 
     currentSol.forEach((bar, barIdx) => {
+        bar.cuts.sort((a, b) => b - a);
+
         let card = document.createElement('div');
         card.className = 'pipe-card';
 
