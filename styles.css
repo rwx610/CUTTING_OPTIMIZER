@@ -1,21 +1,22 @@
 
 :root {
-    --bg-main: #111113;
-    --bg-card: #19191c;
-    --bg-input: #202024;
-    --border-color: #303036;
-    --text-main: #e5e5e7;
-    --text-muted: #92929b;
+    color-scheme: dark;
 
-    --primary: #4778e6;
-    --primary-hover: #5888f5;
+    --bg-main: #111;
+    --bg-card: #1d1d1d;
+    --bg-input: #202020;
+    --border-color: #444;
 
-    --success: #55c99a;
-    --danger: #e47777;
-    --warning: #e6b65c;
+    --text-main: #f5f5f5;
+    --text-muted: #999;
+    --text-dim: #777;
 
-    --radius: 7px;
-    --radius-sm: 5px;
+    --primary: #426d91;
+    --primary-hover: #a9d8ff;
+
+    --success: #a9d8b9;
+    --danger: #ffb5a8;
+    --warning: #e6c58b;
 }
 
 * {
@@ -25,17 +26,14 @@
 }
 
 body {
+    margin: 0;
+    min-height: 100vh;
     background: var(--bg-main);
     color: var(--text-main);
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        sans-serif;
-    padding: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding: 18px;
     font-size: 14px;
-    line-height: 1.45;
+    line-height: 1.5;
 }
 
 .container {
@@ -44,7 +42,7 @@ body {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 /* Панели */
@@ -53,15 +51,15 @@ body {
 .data-section,
 .output-side {
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
-    padding: 14px;
+    border: 1px solid #333;
+    border-radius: 14px;
+    padding: 18px;
 }
 
 .settings-panel {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
 }
 
 .data-section {
@@ -71,7 +69,7 @@ body {
 .output-side {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 18px;
 }
 
 .output-side:empty {
@@ -83,26 +81,28 @@ body {
 .setting-group {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 7px;
 }
 
 .setting-group label {
-    color: var(--text-muted);
-    font-size: 12px;
-    font-weight: 500;
+    color: #aaa;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .setting-group input,
 .setting-group select,
 .data-row input {
+    display: block;
     width: 100%;
     min-width: 0;
+    padding: 12px 13px;
     background: var(--bg-input);
     color: var(--text-main);
     border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    padding: 9px 10px;
-    font: 14px "Consolas", "SFMono-Regular", monospace;
+    border-radius: 10px;
+    font: 16px "Consolas", monospace;
+    font-variant-numeric: tabular-nums;
     outline: none;
     transition: border-color 0.15s ease;
 }
@@ -110,56 +110,52 @@ body {
 .setting-group input:focus,
 .setting-group select:focus,
 .data-row input:focus {
-    border-color: var(--primary);
+    border-color: #888;
 }
 
-input::placeholder {
-    color: #66666f;
-}
-
-select {
+.setting-group select {
     cursor: pointer;
 }
 
-/* Заголовки */
+/* Заголовки секций */
 
 .section-title {
-    color: #b8b8c1;
-    font-size: 11px;
-    font-weight: 650;
-    letter-spacing: 0.8px;
+    margin-bottom: 14px;
+    color: #999;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    margin-bottom: 12px;
 }
 
-/* Строки данных */
+/* Списки деталей и материалов */
 
 .rows-container {
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 9px;
     max-height: 300px;
     overflow-y: auto;
-    margin-bottom: 10px;
-    padding-right: 2px;
+    margin-bottom: 12px;
 }
 
 .data-row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
 }
 
 .data-row input {
-    padding: 8px 9px;
+    padding: 11px 10px;
+    font-size: 15px;
 }
 
 /* Скролл */
 
 .rows-container {
     scrollbar-width: thin;
-    scrollbar-color: #3b3b43 transparent;
+    scrollbar-color: #444 transparent;
 }
 
 .rows-container::-webkit-scrollbar {
@@ -167,101 +163,103 @@ select {
 }
 
 .rows-container::-webkit-scrollbar-thumb {
-    background: #3b3b43;
-    border-radius: 10px;
+    background: #444;
+    border-radius: 8px;
 }
 
-/* Кнопки */
+/* Обычные кнопки */
 
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 36px;
-    padding: 8px 11px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    background: var(--bg-input);
+    min-height: 40px;
+    padding: 9px 13px;
+    background: #292929;
     color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
     font: inherit;
-    font-weight: 550;
+    font-weight: 600;
     cursor: pointer;
-    transition:
-        background 0.15s ease,
-        border-color 0.15s ease;
+    transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .btn:hover {
-    background: #29292f;
-    border-color: #44444d;
+    background: #333;
+    border-color: #555;
 }
 
-.btn:focus-visible,
-.btn-calc:focus-visible,
-.tab-btn:focus-visible {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
+.btn:active,
+.btn-calc:active,
+.tab-btn:active {
+    transform: scale(.99);
 }
+
+/* Добавление строк */
 
 .btn-add-req,
 .btn-add-stock {
     width: 100%;
-    background: transparent;
+    background: #202020;
+    border-radius: 10px;
 }
 
 .btn-add-req {
     color: var(--success);
-    border-color: #315344;
+    border-color: #426d5a;
 }
 
 .btn-add-req:hover {
-    background: #1b2a23;
-    border-color: var(--success);
+    background: #18211c;
 }
 
 .btn-add-stock {
-    color: #83aaff;
-    border-color: #344563;
+    color: #a9d8ff;
+    border-color: #426d91;
 }
 
 .btn-add-stock:hover {
-    background: #1d2637;
-    border-color: #83aaff;
+    background: #182735;
 }
 
+/* Удаление строки */
+
 .btn-del {
+    padding: 9px 12px;
     color: var(--danger);
-    background: transparent;
-    border-color: #493033;
-    padding: 7px 10px;
+    background: #202020;
+    border-color: #55403d;
 }
 
 .btn-del:hover {
-    background: #302023;
-    border-color: var(--danger);
+    background: #30211f;
+    border-color: #8b5a52;
 }
 
-/* Главный расчёт */
+/* Главная кнопка */
 
 .btn-calc {
     width: 100%;
-    min-height: 46px;
-    padding: 12px 16px;
-    border: 1px solid var(--primary);
-    border-radius: var(--radius-sm);
-    background: var(--primary);
-    color: #fff;
+    min-height: 50px;
+    padding: 14px;
+    background: #292929;
+    color: #f5f5f5;
+    border: 1px solid #444;
+    border-radius: 10px;
     font: inherit;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.15s ease;
+    transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .btn-calc:hover {
-    background: var(--primary-hover);
+    background: #333;
+    border-color: #777;
 }
 
-/* Навигация и вкладки */
+/* Результаты и навигация */
 
 .nav-frame {
     display: flex;
@@ -269,105 +267,123 @@ select {
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    padding-bottom: 11px;
-    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 14px;
+    border-bottom: 1px solid #333;
 }
 
 .variant-tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 6px;
 }
 
 .tab-btn {
-    padding: 7px 12px;
-    border: 1px solid transparent;
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--text-muted);
+    padding: 8px 13px;
+    background: #202020;
+    color: #aaa;
+    border: 1px solid #444;
+    border-radius: 8px;
     font: inherit;
-    font-weight: 550;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .tab-btn:hover {
-    background: var(--bg-input);
-    color: var(--text-main);
+    background: #292929;
+    color: #f5f5f5;
 }
 
 .tab-btn.active {
-    background: #252f45;
-    border-color: #35496e;
-    color: #a9c4ff;
+    color: #a9d8ff;
+    background: #182735;
+    border-color: #426d91;
 }
 
 .stats-lbl {
     color: var(--success);
-    font: 600 13px "Consolas", monospace;
+    font: 700 14px "Consolas", monospace;
+    font-variant-numeric: tabular-nums;
 }
 
 /* Визуализация труб */
 
 .pipe-card {
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .pipe-label {
-    margin-bottom: 7px;
-    color: #c9c9d0;
-    font: 600 14px "Consolas", monospace;
+    margin-bottom: 8px;
+    color: #f5f5f5;
+    font: 600 15px "Consolas", monospace;
 }
 
 canvas {
     display: block;
     width: 100%;
     height: 65px;
-    background: #141416;
-    border: 1px solid #29292e;
-    border-radius: var(--radius-sm);
+    background: #151515;
+    border: 1px solid #333;
+    border-radius: 10px;
 }
 
-/* Отходы и ошибки */
+/* Отходы */
 
 .scrap-label {
-    margin-top: 5px;
+    margin-top: 6px;
     color: var(--danger);
     font: 600 13px "Consolas", monospace;
 }
 
+/* Ошибки */
+
 .error-msg {
-    padding: 10px;
+    padding: 13px 14px;
     color: var(--danger);
+    background: #1b1b1b;
+    border-radius: 10px;
+    font-weight: 600;
     text-align: center;
-    font-weight: 550;
 }
 
-/* Компактный экран */
+/* Фокус клавиатуры */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid #888;
+    outline-offset: 2px;
+}
+
+/* Узкие экраны */
 
 @media (max-width: 480px) {
     body {
-        padding: 9px;
-        font-size: 13px;
+        padding: max(18px, env(safe-area-inset-top))
+                 12px
+                 max(18px, env(safe-area-inset-bottom));
+        font-size: 14px;
     }
 
     .settings-panel,
     .data-section,
     .output-side {
-        padding: 11px;
+        padding: 14px;
+        border-radius: 12px;
     }
 
     .data-row {
-        gap: 5px;
+        gap: 6px;
     }
 
     .data-row input {
-        padding: 8px 6px;
-        font-size: 12px;
+        padding: 10px 7px;
+        font-size: 13px;
     }
 
     .btn-del {
-        padding: 7px 8px;
+        padding: 9px;
     }
 
     .nav-frame {
