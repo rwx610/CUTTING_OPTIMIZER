@@ -319,8 +319,7 @@ function drawPipeCanvas(canvas, bar, defaultLength, bladeThickness) {
         let scrapX = padX + (usedSpace * scale);
 
         // Остаток — приглушённый зелёный
-        ctx.fillStyle = '#426d5a';
-        ctx.fillRect(scrapX, padY, scrapW, renderH);
+        ctx.clearRect(scrapX, padY, scrapW, renderH);
 
         ctx.fillStyle = '#a9d8b9';
         ctx.font = 'bold 11px Consolas';
