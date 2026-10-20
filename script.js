@@ -214,7 +214,7 @@ function switchVariant(idx) {
     });
 
     const container = document.getElementById('cards_container');
-    container.innerHTML = ''; 
+    container.innerHTML = '';
 
     const currentSol = topSolutions[idx];
     const defaultLength = parseInt(document.getElementById('cfg_stock_len').value) || 6000;
@@ -228,7 +228,7 @@ function switchVariant(idx) {
 
         let label = document.createElement('div');
         label.className = 'pipe-label';
-        label.style.color = bar.is_custom ? '#60A5FA' : '#94A3B8';
+        label.style.color = bar.is_custom ? '#a9d8b9' : '#a9d8ff';
         label.innerText = `${bar.initial_len}`;
         card.appendChild(label);
 
@@ -244,52 +244,62 @@ function drawPipeCanvas(canvas, bar, defaultLength, bladeThickness) {
     const rect = canvas.getBoundingClientRect();
     canvas.width = rect.width * 2;
     canvas.height = 65 * 2;
-    
+
     const ctx = canvas.getContext('2d');
     ctx.scale(2, 2);
 
     const padX = 10;
-    const padY = 20; // Опускаем трубу ниже, чтобы сверху было место для подписей коротких деталей
+    const padY = 20;
     const renderW = rect.width - (padX * 2);
     const renderH = 24;
     const scale = renderW / defaultLength;
 
     const pipeW = bar.initial_len * scale;
+
+    // Основа хлыста — графит
     ctx.lineWidth = 1;
-    ctx.strokeStyle = '#3F3F46';
-    ctx.fillStyle = '#202024';
+    ctx.strokeStyle = '#444444';
+    ctx.fillStyle = '#202020';
     ctx.fillRect(padX, padY, pipeW, renderH);
     ctx.strokeRect(padX, padY, pipeW, renderH);
 
-    const colors = ['#3B82F6', '#1D4ED8'];
+    // Детали — спокойные оттенки голубого
+    const colors = ['#426d91', '#314f68'];
+
     let currentX = padX;
     let accumulatedLen = 0;
 
     bar.cuts.forEach((part, idx) => {
         let partW = part * scale;
         accumulatedLen += part;
+
         if (idx > 0) {
             accumulatedLen += bladeThickness;
+
+            // Линия пропила
             ctx.beginPath();
-            ctx.strokeStyle = '#121214';
+            ctx.strokeStyle = '#151515';
             ctx.moveTo(currentX, padY);
             ctx.lineTo(currentX, padY + renderH);
             ctx.stroke();
         }
 
         let isOver = accumulatedLen > bar.initial_len;
-        ctx.fillStyle = isOver ? '#F59E0B' : colors[idx % 2];
+
+        // Ошибка размещения — мягкий лососевый;
+        // нормальная деталь — голубая палитра
+        ctx.fillStyle = isOver ? '#b87568' : colors[idx % 2];
         ctx.fillRect(currentX, padY, partW, renderH);
 
-        // Подписи сегментов в зависимости от ширины (25px порог)
+        // Подписи сегментов
         if (partW > 25) {
-            ctx.fillStyle = isOver ? '#000000' : '#FFFFFF';
+            ctx.fillStyle = '#f5f5f5';
             ctx.font = 'bold 10px Consolas';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(part, currentX + (partW / 2), padY + (renderH / 2));
         } else {
-            ctx.fillStyle = '#FFFFFF';
+            ctx.fillStyle = '#cccccc';
             ctx.font = '9px Consolas';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'alphabetic';
@@ -299,22 +309,28 @@ function drawPipeCanvas(canvas, bar, defaultLength, bladeThickness) {
         currentX += partW + (bladeThickness * scale);
     });
 
-    let usedSpace = bar.cuts.reduce((a,b)=>a+b, 0) + (Math.max(0, bar.cuts.length - 1) * bladeThickness);
+    let usedSpace = bar.cuts.reduce((a, b) => a + b, 0)
+        + (Math.max(0, bar.cuts.length - 1) * bladeThickness);
+
     let scrap = bar.initial_len - usedSpace;
 
     if (scrap > 0) {
         let scrapW = scrap * scale;
         let scrapX = padX + (usedSpace * scale);
-        ctx.fillStyle = '#EF4444';
+
+        // Остаток — приглушённый зелёный
+        ctx.fillStyle = '#426d5a';
         ctx.fillRect(scrapX, padY, scrapW, renderH);
 
-        ctx.fillStyle = '#F87171';
+        ctx.fillStyle = '#a9d8b9';
         ctx.font = 'bold 11px Consolas';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
         ctx.fillText(scrap, scrapX, padY + renderH + 6);
+
     } else if (scrap < 0) {
-        ctx.fillStyle = '#F59E0B';
+        // Отрицательный остаток — мягкое предупреждение
+        ctx.fillStyle = '#ffb5a8';
         ctx.font = 'bold 11px system-ui';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
